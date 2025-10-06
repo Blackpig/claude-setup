@@ -7,7 +7,12 @@ claude-code "Set up optimal Claude Code configuration for this TALL stack + Fila
 
 1. Create a .claude/ directory if it doesn't exist
 
-2. Analyze the project to detect current versions and configuration by reading:
+2. Create or update .gitignore to protect sensitive project context:
+   - Check if .gitignore exists, create if it doesn't
+   - Add '.claude/' to .gitignore if not already present
+   - Add a comment explaining why: '# Claude Code configuration (contains project-specific context)'
+
+3. Analyze the project to detect current versions and configuration by reading:
    - composer.json for Laravel, Livewire, Filament versions
    - package.json for Tailwind CSS, Alpine.js versions
    - config/filament.php if it exists
@@ -15,28 +20,28 @@ claude-code "Set up optimal Claude Code configuration for this TALL stack + Fila
    - .env for database driver (DB_CONNECTION) and note that it's typically MySQL
    - Detect that local development is managed by Laravel Herd
 
-3. Create .claude/project-info.md documenting:
+4. Create .claude/project-info.md documenting:
    - Detected stack versions (Laravel, Alpine, Livewire, Tailwind, Filament, PHP)
    - Database driver (from .env)
    - Development environment: Laravel Herd
    - Project type and structure
    - Key dependencies
 
-4. Create .claude/conventions.md documenting:
+5. Create .claude/conventions.md documenting:
    - Existing code patterns found in app/Livewire/ (if any)
    - Filament resource patterns from app/Filament/ (if any)
    - Naming conventions observed in the codebase
    - Directory structure preferences
    - Database conventions and migration patterns
 
-5. Create .claude/context.md for:
+6. Create .claude/context.md for:
    - Project overview and purpose
    - Key architectural decisions
    - Custom components or packages being used
    - Any special configuration or setup notes
    - Laravel Herd site configuration details
 
-6. Set up MCP servers by creating the Claude Desktop configuration:
+7. Set up MCP servers by creating the Claude Desktop configuration:
    - Configure Laravel Herd MCP server (built into Herd)
    - Configure Laravel Boost MCP server (runs via npx, no installation needed)
    - Create configuration at ~/Library/Application Support/Claude/claude_desktop_config.json
@@ -56,14 +61,14 @@ claude-code "Set up optimal Claude Code configuration for this TALL stack + Fila
        }
      }
 
-7. Create .claude/mcp-setup.md documenting:
+8. Create .claude/mcp-setup.md documenting:
    - MCP server configuration details
    - How to restart Claude Desktop to activate MCP servers
    - Test commands for each server
    - Common use cases and workflows
    - Troubleshooting guide
 
-8. Add a .claude/README.md explaining:
+9. Add a .claude/README.md explaining:
    - What these files are for
    - How to keep them updated
    - Best practices for working with Claude Code on this project
@@ -96,6 +101,7 @@ After creating these files and setting up MCP servers, show me:
 
 ## What Gets Created
 
+- `.gitignore` entry for `.claude/` directory (protects sensitive data)
 - `.claude/project-info.md` - Stack versions and database info
 - `.claude/conventions.md` - Code patterns and standards
 - `.claude/context.md` - Project overview and architecture

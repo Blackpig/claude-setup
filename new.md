@@ -7,7 +7,12 @@ claude-code "Set up Claude Code configuration for a new TALL stack + Filament pr
 
 1. Create a .claude/ directory
 
-2. Create .claude/project-info.md with template for:
+2. Create or update .gitignore to protect sensitive project context:
+   - Check if .gitignore exists, create if it doesn't
+   - Add '.claude/' to .gitignore if not already present
+   - Add a comment explaining why: '# Claude Code configuration (contains project-specific context)'
+
+3. Create .claude/project-info.md with template for:
    - Laravel version (leave placeholder for me to fill)
    - Alpine.js version (leave placeholder)
    - Livewire version (leave placeholder)
@@ -18,7 +23,7 @@ claude-code "Set up Claude Code configuration for a new TALL stack + Filament pr
    - Development environment: Laravel Herd
    - Note: Update these versions once stack is installed
 
-3. Create .claude/conventions.md with TALL stack best practices template sections for:
+4. Create .claude/conventions.md with TALL stack best practices template sections for:
    - Livewire component organization (class-based vs inline views)
    - Filament resource patterns and structure
    - Alpine.js usage guidelines and when to use vs Livewire
@@ -27,7 +32,7 @@ claude-code "Set up Claude Code configuration for a new TALL stack + Filament pr
    - Database migration and model conventions
    - Git workflow and branching strategy
 
-4. Create .claude/context.md template with sections for:
+5. Create .claude/context.md template with sections for:
    - Project purpose (to be filled in)
    - Target audience/use case
    - Key features to build
@@ -36,7 +41,7 @@ claude-code "Set up Claude Code configuration for a new TALL stack + Filament pr
    - Authentication/authorization approach
    - Deployment strategy
 
-5. Set up MCP servers by creating the Claude Desktop configuration:
+6. Set up MCP servers by creating the Claude Desktop configuration:
    - Configure Laravel Herd MCP server (built into Herd)
    - Configure Laravel Boost MCP server (runs via npx, no installation needed)
    - Create configuration at ~/Library/Application Support/Claude/claude_desktop_config.json
@@ -56,14 +61,14 @@ claude-code "Set up Claude Code configuration for a new TALL stack + Filament pr
        }
      }
 
-6. Create .claude/mcp-setup.md documenting:
+7. Create .claude/mcp-setup.md documenting:
    - MCP server configuration details
    - How to restart Claude Desktop to activate MCP servers
    - Test commands for each server
    - Common use cases and workflows
    - Troubleshooting guide
 
-7. Create .claude/README.md explaining:
+8. Create .claude/README.md explaining:
    - What these configuration files are for
    - How to keep them updated as the project evolves
    - Best practices for working with Claude Code on TALL stack projects
@@ -74,7 +79,7 @@ claude-code "Set up Claude Code configuration for a new TALL stack + Filament pr
    - Common workflows combining both MCP servers
    - Recommended workflow for filling in version numbers after installation
 
-8. Create a .claude/setup-checklist.md for new project initialization:
+9. Create a .claude/setup-checklist.md for new project initialization:
    - Laravel installation steps
    - Filament installation and configuration
    - Livewire setup
@@ -110,6 +115,7 @@ After setup, show me:
 
 ## What Gets Created
 
+- `.gitignore` entry for `.claude/` directory (protects sensitive data)
 - `.claude/project-info.md` - Stack version templates (to be filled)
 - `.claude/conventions.md` - Best practices templates
 - `.claude/context.md` - Project planning template
