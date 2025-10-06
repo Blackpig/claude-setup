@@ -36,32 +36,45 @@ claude-code "Set up Claude Code configuration for a new TALL stack + Filament pr
    - Authentication/authorization approach
    - Deployment strategy
 
-5. Set up MCP servers by checking and updating the Claude Desktop configuration:
-   - Install Laravel Herd MCP server following docs at https://herd.laravel.com/docs/macos/advanced-usage/ai-integrations#claude-code
-   - Install Laravel Boost MCP server following docs at https://boost.laravel.com/installed
-   - Install Git MCP server for enhanced git operations (commit history, branch management, diff analysis)
-   - Install MySQL/Database MCP server for direct database schema inspection and queries
-   - Install Brave Search MCP for web searches when needing current documentation or package info
-   - Install Filesystem MCP (if not already configured) for comprehensive file operations
-   - Provide instructions for any manual steps needed to complete MCP setup
-   - Test that MCP servers are accessible and properly configured
+5. Set up MCP servers by creating the Claude Desktop configuration:
+   - Configure Laravel Herd MCP server (built into Herd)
+   - Configure Laravel Boost MCP server (runs via npx, no installation needed)
+   - Create configuration at ~/Library/Application Support/Claude/claude_desktop_config.json
+   - Note: Only Herd and Boost MCP servers are currently stable and recommended
+   - Other MCP servers (Git, MySQL, Brave Search, Filesystem) are not yet publicly available
+   - Configuration example:
+     {
+       \"mcpServers\": {
+         \"herd\": {
+           \"command\": \"/Applications/Herd.app/Contents/MacOS/herd\",
+           \"args\": [\"mcp\"]
+         },
+         \"boost\": {
+           \"command\": \"npx\",
+           \"args\": [\"-y\", \"@laravel/boost-mcp-server\"]
+         }
+       }
+     }
 
-6. Create .claude/README.md explaining:
+6. Create .claude/mcp-setup.md documenting:
+   - MCP server configuration details
+   - How to restart Claude Desktop to activate MCP servers
+   - Test commands for each server
+   - Common use cases and workflows
+   - Troubleshooting guide
+
+7. Create .claude/README.md explaining:
    - What these configuration files are for
    - How to keep them updated as the project evolves
    - Best practices for working with Claude Code on TALL stack projects
    - Available MCP servers and their capabilities:
-     * Laravel Herd - site management, PHP version switching, local environment control
-     * Laravel Boost - Laravel-specific AI assistance and best practices
-     * Git - version control operations, history analysis, branch management
-     * MySQL - database schema inspection, query building, migration assistance
-     * Brave Search - documentation lookup, package discovery, staying current
-     * Filesystem - comprehensive file operations and project navigation
+     * Laravel Herd - site management, PHP version switching, local environment control, database management
+     * Laravel Boost - Laravel-specific AI assistance, artisan commands, code generation, testing
    - How to use each MCP server effectively in TALL stack development
-   - Common workflows combining multiple MCP servers (e.g., Git + Database for schema versioning)
+   - Common workflows combining both MCP servers
    - Recommended workflow for filling in version numbers after installation
 
-7. Create a .claude/setup-checklist.md for new project initialization:
+8. Create a .claude/setup-checklist.md for new project initialization:
    - Laravel installation steps
    - Filament installation and configuration
    - Livewire setup
@@ -75,8 +88,9 @@ claude-code "Set up Claude Code configuration for a new TALL stack + Filament pr
 
 After setup, show me:
 - Summary of created configuration files
-- MCP server installation status for each server
-- Any manual steps I need to complete for MCP servers
+- MCP server installation status (should show Herd and Boost configured)
+- Instructions to restart Claude Desktop to activate MCP servers
+- Test commands to verify MCP servers are working
 - Checklist of information I need to provide once I start installing the stack
 - Next steps for project initialization
 - Suggestions for customizing conventions.md based on my preferences"
@@ -89,9 +103,10 @@ After setup, show me:
 2. Copy the command above
 3. Paste into your terminal and run
 4. Review the generated template configuration files
-5. Complete any manual MCP server setup steps
-6. Follow the setup checklist to install your TALL stack
-7. Update `.claude/project-info.md` with actual versions after installation
+5. **Restart Claude Desktop** (Cmd+Q, then reopen) to activate MCP servers
+6. Test MCP servers with "List all my Herd sites" and "Run artisan route:list"
+7. Follow the setup checklist to install your TALL stack
+8. Update `.claude/project-info.md` with actual versions after installation
 
 ## What Gets Created
 
@@ -99,8 +114,22 @@ After setup, show me:
 - `.claude/conventions.md` - Best practices templates
 - `.claude/context.md` - Project planning template
 - `.claude/setup-checklist.md` - Installation guide
+- `.claude/mcp-setup.md` - MCP server configuration and usage guide
 - `.claude/README.md` - Configuration guide
-- MCP server configurations for Herd, Boost, Git, MySQL, Search, and Filesystem
+- `~/Library/Application Support/Claude/claude_desktop_config.json` - MCP server config for Herd and Boost
+
+## Important Notes
+
+### MCP Servers
+- **Only 2 servers configured**: Herd and Boost (these are the stable, production-ready servers)
+- **No manual installation needed**: Herd is built-in, Boost uses npx
+- **Must restart Claude Desktop**: MCP servers only load on startup
+- **Other servers**: Git, MySQL, Brave Search, and Filesystem MCP servers are not yet publicly available
+
+### Testing MCP Servers
+After restarting Claude Desktop, test with:
+- **Herd**: "List all my Herd sites"
+- **Boost**: "Run artisan route:list"
 
 ## After Setup
 
@@ -109,3 +138,34 @@ After setup, show me:
 3. Fill in `.claude/context.md` with your project details
 4. Customize `.claude/conventions.md` to match your preferences
 5. Always reference these files in future Claude Code prompts
+
+## Common MCP Workflows
+
+### Starting Development
+```
+1. "Check Herd service status"
+2. "Open [site].test in browser"
+3. "Run artisan migrate"
+```
+
+### Adding a Feature
+```
+1. "Generate a [Model] model with migration"
+2. "Run artisan migrate"
+3. "Create a Filament resource for [Model]"
+4. "Show me all routes"
+```
+
+### Setting Up Database
+```
+1. "Show me all MySQL databases"
+2. "Run artisan migrate"
+3. "List tables in [database]"
+```
+
+### Code Generation
+```
+1. "Generate a [Model] model with fillable fields [fields]"
+2. "Create a migration for [table] with columns [columns]"
+3. "Create a Filament resource with form fields [fields]"
+```
