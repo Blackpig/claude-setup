@@ -1,0 +1,32 @@
+      
+      # Package lock files
+      composer.lock
+      package-lock.json
+      yarn.lock
+      pnpm-lock.yaml
+      
+      # Environment and config
+      .env*
+      .phpunit.result.cache
+      
+      # Build outputs
+      public/css/
+      public/js/
+      public/vendor/
+      
+      # IDE and system files
+      .idea/
+      .vscode/
+      .DS_Store
+      *.swp
+      *.swo
+      
+      # Laravel specific
+      _ide_helper.php
+      _ide_helper_models.php
+      .phpstorm.meta.php
+      
+      # Test coverage
+      coverage/
+      .phpunit.cache/
+      

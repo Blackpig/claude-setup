@@ -33,6 +33,7 @@ claude-code "Set up optimal Claude Code configuration for this TALL stack + Fila
    - Naming conventions observed in the codebase
    - Directory structure preferences
    - Database conventions and migration patterns
+   - Enum usage for fixed value sets (check app/Enums/ for existing patterns)
 
 6. Create .claude/context.md for:
    - Project overview and purpose
@@ -78,6 +79,37 @@ claude-code "Set up optimal Claude Code configuration for this TALL stack + Fila
    - How to use each MCP server effectively in TALL stack development
    - Common workflows combining both MCP servers
 
+10. FINAL STEP - Copy .cliignore file to optimize token usage:
+   - Copy .cliignore from ~/Clients/Sites/claude-setup/.cliignore to project root
+   - This file contains optimized exclusions for Laravel + Filament projects to reduce token usage
+   - This should be done AFTER analyzing composer.json and package.json (steps 3-4)
+   - Read composer.json to detect installed packages and versions
+   - Read package.json to detect Node dependencies
+   - Verify the .cliignore contents are appropriate for this project
+   - Note: This is created LAST after analyzing the project structure
+
+11. Add .claude/cliignore-guide.md documenting:
+   - Purpose of .cliignore file (reduces token usage by 50-70%)
+   - What files are excluded and why
+   - Specific exceptions allowed:
+     * Can reference vendor/filament/ when debugging Filament-specific issues
+     * Can reference specific vendor packages when integration issues arise
+     * Can access vendor/ temporarily if explicitly requested by user
+   - Instructions for Claude Code:
+     * Honor .cliignore exclusions by default in all operations
+     * Do not read, analyze, or include ignored files in context unless:
+       - User explicitly grants exception (e.g., "You can check vendor/filament/...")
+       - User specifically requests to see a file in an ignored directory
+       - Debugging requires tracing into vendor code temporarily
+     * Always ask permission before accessing ignored directories
+   - Additional token optimization tips:
+     * Use Task/Explore agents for broad codebase searches instead of direct Grep
+     * Read files selectively rather than entire directories
+     * For large files, use offset/limit parameters
+     * Exclude test directories when not working on tests
+     * Exclude migration files when only working on features
+   - How to customize .cliignore for project-specific needs
+
 After creating these files and setting up MCP servers, show me:
 - Summary of detected versions and configuration
 - Database connection details
@@ -85,7 +117,8 @@ After creating these files and setting up MCP servers, show me:
 - Instructions to restart Claude Desktop to activate MCP servers
 - Test commands to verify MCP servers are working
 - Suggestions for additional context to add manually
-- Recommended MCP server workflows for common TALL stack tasks"
+- Recommended MCP server workflows for common TALL stack tasks
+- Confirmation that .cliignore was copied and estimated token savings"
 ```
 
 ## Quick Reference
@@ -98,6 +131,7 @@ After creating these files and setting up MCP servers, show me:
 5. **Restart Claude Desktop** (Cmd+Q, then reopen) to activate MCP servers
 6. Test MCP servers with "List all my Herd sites" and "Run artisan route:list"
 7. Update `.claude/` files with any additional project-specific context
+8. Verify `.cliignore` was copied and check token usage improvement
 
 ## What Gets Created
 
@@ -106,8 +140,10 @@ After creating these files and setting up MCP servers, show me:
 - `.claude/conventions.md` - Code patterns and standards
 - `.claude/context.md` - Project overview and architecture
 - `.claude/mcp-setup.md` - MCP server configuration and usage guide
+- `.claude/cliignore-guide.md` - Token optimization guide and .cliignore usage instructions
 - `.claude/README.md` - Configuration guide
 - `~/Library/Application Support/Claude/claude_desktop_config.json` - MCP server config for Herd and Boost
+- `.cliignore` - Token optimization file (copied from claude-setup repo after project analysis)
 
 ## Important Notes
 
@@ -116,6 +152,13 @@ After creating these files and setting up MCP servers, show me:
 - **No manual installation needed**: Herd is built-in, Boost uses npx
 - **Must restart Claude Desktop**: MCP servers only load on startup
 - **Other servers**: Git, MySQL, Brave Search, and Filesystem MCP servers are not yet publicly available
+
+### .cliignore Creation
+- **Copied automatically**: For existing projects, .cliignore is copied from claude-setup repo in the same run
+- **Smart exclusions**: Based on Laravel + Filament best practices
+- **Immediate savings**: Should reduce token usage by 50-70% right away
+- **Safe to customize**: Edit .cliignore to add project-specific exclusions
+- **Exceptions allowed**: Can access vendor/filament/ or other vendor code when explicitly requested or debugging requires it
 
 ### Testing MCP Servers
 After restarting Claude Desktop, test with:
@@ -128,6 +171,14 @@ Always reference these files in future Claude Code prompts by mentioning:
 - "Following our project conventions..."
 - "Based on our stack configuration..."
 - "Using the patterns documented in .claude/..."
+
+## Verifying Token Savings
+
+After setup, you can verify the .cliignore is working:
+1. Run a simple command like "List all Filament resources"
+2. Check the token count in the response
+3. Compare to your previous 6k token usage
+4. Should see significant reduction (typically 2-3k tokens for similar queries)
 
 ## Common MCP Workflows
 

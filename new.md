@@ -30,6 +30,7 @@ claude-code "Set up Claude Code configuration for a new TALL stack + Filament pr
    - Tailwind CSS approach (utility-first patterns)
    - Laravel coding standards (PSR-12, naming conventions)
    - Database migration and model conventions
+   - Enum usage for fixed value sets (status, type, role fields)
    - Git workflow and branching strategy
 
 5. Create .claude/context.md template with sections for:
@@ -91,6 +92,36 @@ claude-code "Set up Claude Code configuration for a new TALL stack + Filament pr
    - Environment configuration (.env setup)
    - Reminder to update project-info.md with actual versions
 
+10. FINAL STEP - After stack installation, when composer.json and package.json exist, copy .cliignore file:
+   - Copy .cliignore from ~/Clients/Sites/claude-setup/.cliignore to project root
+   - This file contains optimized exclusions for Laravel + Filament projects to reduce token usage
+   - Read composer.json to detect installed packages and versions
+   - Read package.json to detect Node dependencies
+   - Verify the .cliignore contents are appropriate for this project
+   - Note: This should only be created AFTER composer.json and package.json exist and have been analyzed
+
+11. Add .claude/cliignore-guide.md documenting:
+   - Purpose of .cliignore file (reduces token usage by 50-70%)
+   - What files are excluded and why
+   - Specific exceptions allowed:
+     * Can reference vendor/filament/ when debugging Filament-specific issues
+     * Can reference specific vendor packages when integration issues arise
+     * Can access vendor/ temporarily if explicitly requested by user
+   - Instructions for Claude Code:
+     * Honor .cliignore exclusions by default in all operations
+     * Do not read, analyze, or include ignored files in context unless:
+       - User explicitly grants exception (e.g., "You can check vendor/filament/...")
+       - User specifically requests to see a file in an ignored directory
+       - Debugging requires tracing into vendor code temporarily
+     * Always ask permission before accessing ignored directories
+   - Additional token optimization tips:
+     * Use Task/Explore agents for broad codebase searches instead of direct Grep
+     * Read files selectively rather than entire directories
+     * For large files, use offset/limit parameters
+     * Exclude test directories when not working on tests
+     * Exclude migration files when only working on features
+   - How to customize .cliignore for project-specific needs
+
 After setup, show me:
 - Summary of created configuration files
 - MCP server installation status (should show Herd and Boost configured)
@@ -98,7 +129,8 @@ After setup, show me:
 - Test commands to verify MCP servers are working
 - Checklist of information I need to provide once I start installing the stack
 - Next steps for project initialization
-- Suggestions for customizing conventions.md based on my preferences"
+- Suggestions for customizing conventions.md based on my preferences
+- Reminder to run this setup again after installing the stack to create .clignore"
 ```
 
 ## Quick Reference
@@ -112,6 +144,7 @@ After setup, show me:
 6. Test MCP servers with "List all my Herd sites" and "Run artisan route:list"
 7. Follow the setup checklist to install your TALL stack
 8. Update `.claude/project-info.md` with actual versions after installation
+9. **Run the setup command again** to generate the optimized `.clignore` file
 
 ## What Gets Created
 
@@ -121,8 +154,10 @@ After setup, show me:
 - `.claude/context.md` - Project planning template
 - `.claude/setup-checklist.md` - Installation guide
 - `.claude/mcp-setup.md` - MCP server configuration and usage guide
+- `.claude/cliignore-guide.md` - Token optimization guide and .cliignore usage instructions
 - `.claude/README.md` - Configuration guide
 - `~/Library/Application Support/Claude/claude_desktop_config.json` - MCP server config for Herd and Boost
+- `.cliignore` - Token optimization file (copied from claude-setup repo after stack installation)
 
 ## Important Notes
 
@@ -131,6 +166,12 @@ After setup, show me:
 - **No manual installation needed**: Herd is built-in, Boost uses npx
 - **Must restart Claude Desktop**: MCP servers only load on startup
 - **Other servers**: Git, MySQL, Brave Search, and Filesystem MCP servers are not yet publicly available
+
+### .cliignore Creation
+- **Two-step process**: Initial setup creates templates, second run (after stack installation) copies .cliignore
+- **Why wait?**: Need to analyze composer.json and package.json to verify exclusions are appropriate
+- **Token savings**: Typically reduces token usage by 50-70% by excluding vendor/, node_modules/, and build files
+- **Exceptions allowed**: Can access vendor/filament/ or other vendor code when explicitly requested or debugging requires it
 
 ### Testing MCP Servers
 After restarting Claude Desktop, test with:
@@ -141,9 +182,10 @@ After restarting Claude Desktop, test with:
 
 1. Install your TALL stack following the checklist
 2. Update `.claude/project-info.md` with actual versions
-3. Fill in `.claude/context.md` with your project details
-4. Customize `.claude/conventions.md` to match your preferences
-5. Always reference these files in future Claude Code prompts
+3. **Re-run the setup command** to create `.clignore` based on detected packages
+4. Fill in `.claude/context.md` with your project details
+5. Customize `.claude/conventions.md` to match your preferences
+6. Always reference these files in future Claude Code prompts
 
 ## Common MCP Workflows
 
