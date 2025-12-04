@@ -1,9 +1,9 @@
-# Claude Code Setup for New TALL Stack + Filament Project
+# Claude Code Setup for New TALL Stack + Filament Project (Enhanced)
 
-Use this prompt with Claude Code to configure optimal settings for a new project:
+Use this prompt with Claude Code to configure optimal settings for a new project with built-in context management:
 
 ```bash
-claude-code "Set up Claude Code configuration for a new TALL stack + Filament project:
+claude-code "Set up Claude Code configuration for a new TALL stack + Filament project with context management:
 
 1. Create a .claude/ directory
 
@@ -12,208 +12,375 @@ claude-code "Set up Claude Code configuration for a new TALL stack + Filament pr
    - Add '.claude/' to .gitignore if not already present
    - Add a comment explaining why: '# Claude Code configuration (contains project-specific context)'
 
-3. Create .claude/project-info.md with template for:
-   - Laravel version (leave placeholder for me to fill)
-   - Alpine.js version (leave placeholder)
-   - Livewire version (leave placeholder)
-   - Tailwind CSS version (v3 or v4 - leave placeholder)
-   - Filament version (v3 or v4 - leave placeholder)
-   - PHP version (leave placeholder)
-   - Database driver: MySQL (default assumption for TALL stack)
+3. CRITICAL INSTRUCTION - Documentation Location:
+   - ALL project notes, tasks, documentation, and logs created by Claude MUST be stored in .claude/ directory
+   - NEVER create documentation files in project root or other directories
+   - Valid locations for Claude-created documentation:
+     * .claude/notes.md - General project notes
+     * .claude/tasks.md - Task lists and todos
+     * .claude/decisions.md - Architectural decisions
+     * .claude/changelog.md - Work log and changes
+     * .claude/debug-notes.md - Debugging notes
+     * .claude/[any-other-name].md - Any other documentation
+   - INVALID locations: root directory, docs/, notes/, or anywhere outside .claude/
+   - Exception: README.md in root is acceptable only if specifically requested
+   - This keeps project clean and documentation organized in one place
+
+4. Create .claude/project-info.md with CRITICAL CONTEXT SECTION template:
+   
+   ```markdown
+   # Project Information
+   
+   ## ⚠️ CRITICAL - READ THIS FIRST BEFORE EVERY RESPONSE
+   
+   **You MUST verify these facts before making ANY code changes:**
+   
+   - **Filament Version**: [TO BE FILLED - v3 or v4?] ⚠️ UPDATE AFTER INSTALLATION
+   - **Laravel Version**: [TO BE FILLED] ⚠️ UPDATE AFTER INSTALLATION
+   - **Livewire Version**: [TO BE FILLED] ⚠️ UPDATE AFTER INSTALLATION  
+   - **PHP Version**: [TO BE FILLED] ⚠️ UPDATE AFTER INSTALLATION
+   - **Tailwind Version**: [TO BE FILLED - v3 or v4?] ⚠️ UPDATE AFTER INSTALLATION
+   - **Database**: MySQL (assumed for TALL stack)
+   
+   ### ⚠️ IMPORTANT: Update versions IMMEDIATELY after installation!
+   
+   ### Common Mistakes to AVOID:
+   - Using Filament v4 syntax when project is v3 (e.g., Record $record vs $record)
+   - Using wrong Livewire syntax for version
+   - Assuming different PHP version features
+   - Using wrong Tailwind classes for version
+   
+   ### Before Every Code Change - Self Check:
+   1. Have I checked the Filament version above?
+   2. Have I checked which Livewire version is installed?
+   3. Am I using the correct syntax for this version?
+   4. Have I reviewed conventions.md for established patterns?
+   
+   ### After Stack Installation:
+   **Run the setup command again to auto-detect and fill in versions!**
+   
+   ---
+   
+   ## Stack Details (Templates)
+   - Laravel version: [TBD]
+   - Alpine.js version: [TBD]
+   - Livewire version: [TBD]
+   - Tailwind CSS version: [TBD - v3 or v4]
+   - Filament version: [TBD - v3 or v4]
+   - PHP version: [TBD]
+   - Database driver: MySQL (default assumption)
    - Development environment: Laravel Herd
-   - Note: Update these versions once stack is installed
+   ```
 
-4. Create .claude/conventions.md with TALL stack best practices template sections for:
-   - Livewire component organization (class-based vs inline views)
-   - Filament resource patterns and structure
-   - Alpine.js usage guidelines and when to use vs Livewire
-   - Tailwind CSS approach (utility-first patterns)
-   - Laravel coding standards (PSR-12, naming conventions)
-   - Database migration and model conventions
-   - Enum usage for fixed value sets (status, type, role fields)
-   - Git workflow and branching strategy
+5. Create .claude/conventions.md with TALL stack best practices template AND version placeholders:
+   
+   ```markdown
+   # Project Conventions
+   
+   ## ⚠️ UPDATE AFTER STACK INSTALLATION
+   This file should be updated with actual versions and patterns after installing the stack.
+   
+   ## Filament Version-Specific Patterns
+   
+   **This project uses Filament [VERSION TO BE DETERMINED]**
+   
+   ### Resource Structure (Filament [VERSION])
+   [Will be filled in as patterns emerge]
+   
+   ### Form/Table Patterns (Filament [VERSION])
+   [Will be filled in with version-specific syntax]
+   
+   ### Version-Specific Gotchas
+   - [Add as discovered]
+   
+   ## Livewire Patterns
+   
+   **This project uses Livewire [VERSION TO BE DETERMINED]**
+   
+   ### Component Organization
+   - Class-based vs inline views
+   - [Add patterns as established]
+   
+   ## Alpine.js Usage Guidelines
+   - When to use Alpine vs Livewire
+   - [Add patterns as established]
+   
+   ## Tailwind CSS Approach
+   - Utility-first patterns
+   - [Add as established]
+   
+   ## Laravel Coding Standards
+   - PSR-12 compliance
+   - Naming conventions
+   - [Add as established]
+   
+   ## Database Conventions
+   - Migration patterns
+   - Model conventions
+   - [Add as established]
+   
+   ## Enum Usage
+   - For status, type, role fields
+   - [Add as patterns emerge]
+   
+   ## Git Workflow
+   - Branching strategy
+   - [Add as established]
+   ```
 
-5. Create .claude/context.md template with sections for:
+6. Create .claude/session-health.md for monitoring context during development:
+   
+   ```markdown
+   # Session Health Monitoring for Claude Code
+   
+   ## Purpose
+   Helps maintain context quality during extended Claude Code sessions.
+   
+   ## ⚠️ AFTER STACK INSTALLATION: Update with actual versions!
+   
+   ## Check Every 20-30 Messages
+   
+   ### Context Awareness Check
+   - [ ] Can I accurately state the Filament version? (Check project-info.md)
+   - [ ] Do I remember the last 3 changes I made?
+   - [ ] Am I following conventions documented in conventions.md?
+   - [ ] Am I using correct syntax for the versions installed?
+   
+   ### Code Quality Check
+   - [ ] Using correct Filament [VERSION] syntax?
+   - [ ] Maintaining consistency with earlier changes?
+   - [ ] No repeated mistakes from earlier in session?
+   
+   ### Warning Signs (Suggest fresh session)
+   - Making same mistake twice
+   - Using wrong version syntax
+   - Can't recall project versions
+   - Contradicting earlier decisions
+   
+   ## During Initial Setup
+   
+   Until versions are installed and filled in:
+   - Remind user to update project-info.md after each package install
+   - Don't make assumptions about versions
+   - Ask before using version-specific syntax
+   
+   ## After Versions Filled In
+   
+   - Reference project-info.md critical section frequently
+   - Self-check version syntax before every code change
+   - Watch for context degradation signs
+   
+   ## If Context Feels Degraded
+   
+   **Tell the user:**
+   \"I notice we've been working for a while. To maintain accuracy with 
+   version syntax and project conventions, I recommend documenting current 
+   state and starting a fresh session with explicit version reminders.\"
+   ```
+
+7. Create .claude/context-anchors.md with templates to fill after installation:
+   
+   ```markdown
+   # Context Anchors for User
+   
+   ## What Are Context Anchors?
+   Short reminders to keep Claude Code's context fresh during long sessions.
+   
+   ## ⚠️ UPDATE THESE AFTER STACK INSTALLATION
+   
+   Replace [VERSION] placeholders with actual versions after installation.
+   
+   ## Recommended Anchors for This Project
+   
+   ### Quick Version Check (Use every 15-20 messages)
+   \"Quick reminder: Filament [VERSION], Livewire [VERSION]\"
+   \"Check .claude/project-info.md for versions before continuing\"
+   
+   ### Pattern Reminder
+   \"Following conventions in .claude/conventions.md\"
+   \"Using patterns we established earlier\"
+   
+   ### Before Big Changes
+   \"Verify: correct versions, existing patterns before implementing\"
+   \"Check project-info.md critical section\"
+   
+   ## During Initial Development (Before patterns established)
+   \"Document any new patterns in .claude/conventions.md\"
+   \"Update conventions.md as we establish patterns\"
+   
+   ## Cost Analysis
+   - **Cost of anchor**: ~50 tokens
+   - **Cost of fixing mistake**: 500-1000 tokens
+   - **ROI**: 10-20x by preventing mistakes
+   
+   ## When to Use
+   - After 15-20 messages
+   - Before major features
+   - When switching codebase areas
+   - If wrong syntax appears
+   - Start of each session
+   - **During installation**: After each package install
+   ```
+
+8. Create .claude/context.md template:
    - Project purpose (to be filled in)
-   - Target audience/use case
+   - Target audience/use case  
    - Key features to build
    - Special requirements or constraints
    - Custom packages or integrations planned
    - Authentication/authorization approach
    - Deployment strategy
 
-6. Set up MCP servers by creating the Claude Desktop configuration:
-   - Configure Laravel Herd MCP server (built into Herd)
-   - Configure Laravel Boost MCP server (runs via npx, no installation needed)
+9. Create .claude/setup-checklist.md with version-tracking reminders:
+   
+   ```markdown
+   # New Project Setup Checklist
+   
+   ## Critical: Update .claude/project-info.md after EACH step!
+   
+   ### 1. Laravel Installation
+   - [ ] Install Laravel
+   - [ ] **Immediately update project-info.md with Laravel version**
+   - [ ] Run: composer show laravel/framework | grep versions
+   
+   ### 2. Filament Installation  
+   - [ ] Install Filament (v3 or v4)
+   - [ ] **⚠️ CRITICAL: Update project-info.md with Filament version**
+   - [ ] Run: composer show filament/filament | grep versions
+   - [ ] This is the MOST IMPORTANT version to track!
+   
+   ### 3. Livewire Setup
+   - [ ] Verify Livewire installation (comes with Filament)
+   - [ ] **Update project-info.md with Livewire version**
+   - [ ] Run: composer show livewire/livewire | grep versions
+   
+   ### 4. Tailwind CSS Installation
+   - [ ] Install Tailwind (v3 or v4)
+   - [ ] **Update project-info.md with Tailwind version**
+   - [ ] Check package.json
+   
+   ### 5. Alpine.js Integration
+   - [ ] Verify Alpine.js (comes with Livewire)
+   - [ ] **Update project-info.md with Alpine version**
+   - [ ] Check package.json
+   
+   ### 6. After ALL installations complete:
+   - [ ] **Run the Claude Code setup command AGAIN**
+   - [ ] This will auto-detect and fill in all versions
+   - [ ] Verify project-info.md critical section is complete
+   - [ ] Copy .cliignore file
+   
+   ### 7. Database Configuration
+   - [ ] Configure .env
+   - [ ] Create database
+   - [ ] Run first migration
+   
+   ### 8. Git Setup
+   - [ ] Initialize repository
+   - [ ] Verify .gitignore includes .claude/
+   - [ ] Initial commit
+   
+   ### 9. Laravel Herd Setup
+   - [ ] Add site to Herd
+   - [ ] Configure PHP version
+   - [ ] Test site access
+   
+   ### 10. Final Verification
+   - [ ] All versions in project-info.md are filled in
+   - [ ] Filament version is CONFIRMED (v3 or v4)
+   - [ ] .cliignore is in place
+   - [ ] Ready for development!
+   ```
+
+10. Set up MCP servers:
+   - Configure Laravel Herd MCP server
+   - Configure Laravel Boost MCP server
    - Create configuration at ~/Library/Application Support/Claude/claude_desktop_config.json
-   - Note: Only Herd and Boost MCP servers are currently stable and recommended
-   - Other MCP servers (Git, MySQL, Brave Search, Filesystem) are not yet publicly available
-   - Configuration example:
-     {
-       \"mcpServers\": {
-         \"herd\": {
-           \"command\": \"/Applications/Herd.app/Contents/MacOS/herd\",
-           \"args\": [\"mcp\"]
-         },
-         \"boost\": {
-           \"command\": \"npx\",
-           \"args\": [\"-y\", \"@laravel/boost-mcp-server\"]
-         }
-       }
-     }
+   - Configuration example with both servers
 
-7. Create .claude/mcp-setup.md documenting:
-   - MCP server configuration details
-   - How to restart Claude Desktop to activate MCP servers
-   - Test commands for each server
-   - Common use cases and workflows
-   - Troubleshooting guide
+11. Create .claude/mcp-setup.md documenting MCP configuration
 
-8. Create .claude/README.md explaining:
-   - What these configuration files are for
-   - How to keep them updated as the project evolves
-   - Best practices for working with Claude Code on TALL stack projects
-   - Available MCP servers and their capabilities:
-     * Laravel Herd - site management, PHP version switching, local environment control, database management
-     * Laravel Boost - Laravel-specific AI assistance, artisan commands, code generation, testing
-   - How to use each MCP server effectively in TALL stack development
-   - Common workflows combining both MCP servers
-   - Recommended workflow for filling in version numbers after installation
+12. Create .claude/cliignore-guide.md documenting token optimization
+    - NOTE: .cliignore will be copied AFTER running setup again post-installation
 
-9. Create a .claude/setup-checklist.md for new project initialization:
-   - Laravel installation steps
-   - Filament installation and configuration
-   - Livewire setup
-   - Tailwind CSS installation (v3 vs v4 decision)
-   - Alpine.js integration
-   - Database configuration and first migration
-   - Git repository initialization
-   - Laravel Herd site setup
-   - Environment configuration (.env setup)
-   - Reminder to update project-info.md with actual versions
-
-10. FINAL STEP - After stack installation, when composer.json and package.json exist, copy .cliignore file:
-   - Copy .cliignore from ~/Clients/Sites/claude-setup/.cliignore to project root
-   - This file contains optimized exclusions for Laravel + Filament projects to reduce token usage
-   - Read composer.json to detect installed packages and versions
-   - Read package.json to detect Node dependencies
-   - Verify the .cliignore contents are appropriate for this project
-   - Note: This should only be created AFTER composer.json and package.json exist and have been analyzed
-
-11. Add .claude/cliignore-guide.md documenting:
-   - Purpose of .cliignore file (reduces token usage by 50-70%)
-   - What files are excluded and why
-   - Specific exceptions allowed:
-     * Can reference vendor/filament/ when debugging Filament-specific issues
-     * Can reference specific vendor packages when integration issues arise
-     * Can access vendor/ temporarily if explicitly requested by user
-   - Instructions for Claude Code:
-     * Honor .cliignore exclusions by default in all operations
-     * Do not read, analyze, or include ignored files in context unless:
-       - User explicitly grants exception (e.g., "You can check vendor/filament/...")
-       - User specifically requests to see a file in an ignored directory
-       - Debugging requires tracing into vendor code temporarily
-     * Always ask permission before accessing ignored directories
-   - Additional token optimization tips:
-     * Use Task/Explore agents for broad codebase searches instead of direct Grep
-     * Read files selectively rather than entire directories
-     * For large files, use offset/limit parameters
-     * Exclude test directories when not working on tests
-     * Exclude migration files when only working on features
-   - How to customize .cliignore for project-specific needs
+13. Add a .claude/README.md explaining:
+    - What these configuration files are for
+    - **NEW: Two-phase setup process (before and after installation)**
+    - **NEW: Critical importance of updating versions**
+    - **NEW: Context management during initial development**
+    - **NEW: Using session-health.md and context anchors**
+    - How to keep files updated as project evolves
+    - Best practices for Claude Code on TALL stack projects
+    - Available MCP servers and capabilities
+    - Common workflows
+    - **NEW: How to prevent context degradation during development**
 
 After setup, show me:
-- Summary of created configuration files
-- MCP server installation status (should show Herd and Boost configured)
-- Instructions to restart Claude Desktop to activate MCP servers
-- Test commands to verify MCP servers are working
-- Checklist of information I need to provide once I start installing the stack
-- Next steps for project initialization
-- Suggestions for customizing conventions.md based on my preferences
-- Reminder to run this setup again after installing the stack to create .clignore"
+- Summary of created template files
+- **NEW: Big red warning about updating versions after installation**
+- **NEW: Reminder to run setup AGAIN after stack installation**
+- MCP server installation status
+- Test commands for MCP servers
+- Checklist of information to provide during installation
+- **NEW: Example context anchors (with version placeholders)**
+- **NEW: Instructions for maintaining context during initial development**
+- Next steps for project initialization"
 ```
 
-## Quick Reference
+## Key Enhancements for New Projects
 
-**Usage:**
-1. Create and navigate to your new project directory
-2. Copy the command above
-3. Paste into your terminal and run
-4. Review the generated template configuration files
-5. **Restart Claude Desktop** (Cmd+Q, then reopen) to activate MCP servers
-6. Test MCP servers with "List all my Herd sites" and "Run artisan route:list"
-7. Follow the setup checklist to install your TALL stack
-8. Update `.claude/project-info.md` with actual versions after installation
-9. **Run the setup command again** to generate the optimized `.clignore` file
+### 1. Two-Phase Setup
+- **Phase 1**: Before installation - creates templates
+- **Phase 2**: After installation - fills in versions and copies .cliignore
 
-## What Gets Created
+### 2. Version Placeholders
+- All version fields marked with ⚠️ UPDATE AFTER INSTALLATION
+- Critical section has placeholder warnings
+- Reminders throughout to update versions
 
-- `.gitignore` entry for `.claude/` directory (protects sensitive data)
-- `.claude/project-info.md` - Stack version templates (to be filled)
-- `.claude/conventions.md` - Best practices templates
-- `.claude/context.md` - Project planning template
-- `.claude/setup-checklist.md` - Installation guide
-- `.claude/mcp-setup.md` - MCP server configuration and usage guide
-- `.claude/cliignore-guide.md` - Token optimization guide and .cliignore usage instructions
-- `.claude/README.md` - Configuration guide
-- `~/Library/Application Support/Claude/claude_desktop_config.json` - MCP server config for Herd and Boost
-- `.cliignore` - Token optimization file (copied from claude-setup repo after stack installation)
+### 3. Setup Checklist Integration
+- Links version updates to installation steps
+- Reminds to update project-info.md after EACH package install
+- Emphasizes Filament version as MOST critical
 
-## Important Notes
+### 4. Context Management from Day 1
+- Session health monitoring starts from first session
+- Context anchors available with placeholders
+- Conventions documented as patterns emerge
 
-### MCP Servers
-- **Only 2 servers configured**: Herd and Boost (these are the stable, production-ready servers)
-- **No manual installation needed**: Herd is built-in, Boost uses npx
-- **Must restart Claude Desktop**: MCP servers only load on startup
-- **Other servers**: Git, MySQL, Brave Search, and Filesystem MCP servers are not yet publicly available
+## Usage Pattern for New Projects
 
-### .cliignore Creation
-- **Two-step process**: Initial setup creates templates, second run (after stack installation) copies .cliignore
-- **Why wait?**: Need to analyze composer.json and package.json to verify exclusions are appropriate
-- **Token savings**: Typically reduces token usage by 50-70% by excluding vendor/, node_modules/, and build files
-- **Exceptions allowed**: Can access vendor/filament/ or other vendor code when explicitly requested or debugging requires it
-
-### Testing MCP Servers
-After restarting Claude Desktop, test with:
-- **Herd**: "List all my Herd sites"
-- **Boost**: "Run artisan route:list"
-
-## After Setup
-
-1. Install your TALL stack following the checklist
-2. Update `.claude/project-info.md` with actual versions
-3. **Re-run the setup command** to create `.clignore` based on detected packages
-4. Fill in `.claude/context.md` with your project details
-5. Customize `.claude/conventions.md` to match your preferences
-6. Always reference these files in future Claude Code prompts
-
-## Common MCP Workflows
-
-### Starting Development
-```
-1. "Check Herd service status"
-2. "Open [site].test in browser"
-3. "Run artisan migrate"
+**Initial Setup (before installing Laravel):**
+```bash
+claude-code "Run the new project setup from claude-setup/new.md"
 ```
 
-### Adding a Feature
-```
-1. "Generate a [Model] model with migration"
-2. "Run artisan migrate"
-3. "Create a Filament resource for [Model]"
-4. "Show me all routes"
+**After installing Laravel:**
+```bash
+"Just installed Laravel 11.x - updating .claude/project-info.md"
 ```
 
-### Setting Up Database
-```
-1. "Show me all MySQL databases"
-2. "Run artisan migrate"
-3. "List tables in [database]"
+**After installing Filament (CRITICAL!):**
+```bash
+"Installed Filament v3.2 - UPDATING .claude/project-info.md critical section"
 ```
 
-### Code Generation
+**After ALL packages installed:**
+```bash
+claude-code "Run the setup command again to auto-detect all versions and copy .cliignore"
 ```
-1. "Generate a [Model] model with fillable fields [fields]"
-2. "Create a migration for [table] with columns [columns]"
-3. "Create a Filament resource with form fields [fields]"
-```
+
+**During development:**
+- Use context anchors every 15-20 messages
+- Reference .claude/conventions.md as patterns emerge
+- Update conventions.md with new patterns
+
+## What This Solves
+
+✅ **Version tracking from start**: Templates force version awareness  
+✅ **Two-phase setup**: Prevents assumptions, forces verification  
+✅ **Context from day 1**: Management practices from first session  
+✅ **Pattern documentation**: Conventions build as project grows  
+✅ **Prevents mistakes**: Critical section enforces version checks  
+
+Next: update-cliignore.md and README.md?
