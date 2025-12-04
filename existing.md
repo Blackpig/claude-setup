@@ -1,3 +1,8 @@
+# Claude Code Setup for Existing TALL Stack + Filament Project (Enhanced)
+
+Use this prompt with Claude Code to configure optimal settings for an existing project with context management to prevent version confusion and repeated mistakes:
+
+```bash
 claude-code "Set up optimal Claude Code configuration for this TALL stack + Filament project:
 
 1. Create a .claude/ directory if it doesn't exist
@@ -36,7 +41,8 @@ claude-code "Set up optimal Claude Code configuration for this TALL stack + Fila
 5. Create .claude/project-info.md with CRITICAL CONTEXT SECTION at the top:
    
    Structure it as:
-```markdown
+   
+   ```markdown
    # Project Information
    
    ## ⚠️ CRITICAL - READ THIS FIRST BEFORE EVERY RESPONSE
@@ -66,12 +72,13 @@ claude-code "Set up optimal Claude Code configuration for this TALL stack + Fila
    
    ## Stack Details
    [Rest of detected information]
-```
+   ```
 
 6. Create .claude/conventions.md with VERSION-SPECIFIC PATTERNS:
    
    Structure it to include:
-```markdown
+   
+   ```markdown
    # Project Conventions
    
    ## Filament Version-Specific Patterns
@@ -86,6 +93,36 @@ claude-code "Set up optimal Claude Code configuration for this TALL stack + Fila
    
    ### Common Version Gotchas
    - [List version-specific issues found in this project]
+   
+   ## CRITICAL: Filament Project Rules
+   
+   ### Migration Safety
+   **NEVER use `migrate:fresh` or `migrate:refresh` without explicit permission**
+   
+   These commands delete the admin user in Filament apps, requiring manual recreation.
+   
+   **Correct workflow:**
+   1. Always try `php artisan migrate:rollback` first
+   2. If rollback fails, STOP and ask user: "Rollback failed. May I use migrate:fresh? This will delete your admin user."
+   3. Only proceed with `migrate:fresh` after explicit user confirmation
+   4. Never assume permission - always ask first
+   
+   ### Livewire Component Preferences
+   **Prefer class-based Livewire components over Volt single-file components**
+   
+   - Default: Use standard class-based Livewire components (app/Livewire/ComponentName.php + view)
+   - Volt is available but should only be used when there's a genuine benefit
+   - Before creating a Volt component, ASK: "I'm considering a Volt single-file component for [reason]. 
+     Would you prefer a standard class-based component instead?"
+   - Wait for user confirmation before using Volt
+   
+   ### Flux Component Usage
+   **Do NOT use Flux components for public-facing/frontend pages**
+   
+   - Flux is included as a Laravel (not Filament) dependency
+   - Flux components are ONLY for Laravel admin/auth resources
+   - For public/frontend pages: Use standard Blade components + Tailwind CSS
+   - Never use Flux outside of Laravel admin/auth context
    
    ## Livewire Patterns
    
@@ -103,7 +140,7 @@ claude-code "Set up optimal Claude Code configuration for this TALL stack + Fila
    
    ## Enum Usage
    [Document existing enum patterns from app/Enums/]
-```
+   ```
 
 7. Create .claude/context.md for:
    - Project overview and purpose
@@ -114,7 +151,8 @@ claude-code "Set up optimal Claude Code configuration for this TALL stack + Fila
    - Known issues or quirks in this specific project
 
 8. Create .claude/session-health.md for monitoring context during long sessions:
-```markdown
+   
+   ```markdown
    # Session Health Monitoring
    
    ## Purpose
@@ -151,10 +189,11 @@ claude-code "Set up optimal Claude Code configuration for this TALL stack + Fila
    3. Start a fresh session with explicit version reminders
    
    This helps prevent expensive mistakes from context degradation."
-```
+   ```
 
 9. Create .claude/context-anchors.md with reminders to use:
-```markdown
+   
+   ```markdown
    # Context Anchors for User
    
    ## What Are Context Anchors?
@@ -190,7 +229,7 @@ claude-code "Set up optimal Claude Code configuration for this TALL stack + Fila
    - When switching between different parts of codebase
    - If you notice Claude using wrong syntax
    - Beginning of each new coding session
-```
+   ```
 
 10. Set up MCP servers by creating the Claude Desktop configuration:
    - Configure Laravel Herd MCP server (built into Herd)
@@ -254,3 +293,78 @@ After creating these files, show me:
 - **NEW: Warning signs to watch for during extended sessions**
 - Estimated token savings from .cliignore
 - Next steps for maintaining context quality"
+```
+
+## Key Enhancements for Claude Code CLI
+
+### 1. Critical Context Section
+- Puts versions at the VERY TOP of project-info.md
+- Claude Code reads this first in every session
+- Explicit warnings about common version mistakes
+
+### 2. Session Health Monitoring
+- New file: `.claude/session-health.md`
+- Self-check questions for Claude Code
+- Warning signs of context degradation
+- When to suggest starting fresh
+
+### 3. Context Anchors
+- New file: `.claude/context-anchors.md`
+- Short reminders for you to use every 15-20 messages
+- Costs ~50 tokens but prevents 500-1000 token mistakes
+- Project-specific anchor examples
+
+### 4. Version-Specific Conventions
+- Enhanced conventions.md structure
+- Explicitly documents version-specific patterns
+- Lists common version gotchas
+- Makes version central to every pattern
+
+## Usage Pattern
+
+**Start of session:**
+```bash
+claude "Working on [feature]. Reminder: Filament [version], check .claude/project-info.md"
+```
+
+**Every 15-20 messages:**
+```bash
+"Quick check: what Filament version are we using?"
+# or
+"Reminder: following conventions in .claude/conventions.md"
+```
+
+**When Claude makes mistake:**
+```bash
+"That's Filament v4 syntax - we're on v3. Check .claude/project-info.md critical section"
+```
+
+## What This Solves
+
+✅ **Version confusion**: Critical section always at top  
+✅ **Repeated mistakes**: Session health monitoring  
+✅ **Context degradation**: Anchor reminders every 15-20 messages  
+✅ **High costs**: Prevention is cheaper than fixing  
+✅ **Frustration**: Clear process for maintaining quality  
+
+## Quick Reference
+
+**Every New Session:**
+1. Open with version reminder
+2. Reference .claude/ files explicitly
+
+**Every 15-20 Messages:**
+1. Use a context anchor
+2. Quick version check
+
+**If Mistakes Happen:**
+1. Point to project-info.md critical section
+2. Reference conventions.md
+3. Consider starting fresh if repeated
+
+**Long Sessions (50+ messages):**
+1. Check session-health.md
+2. Document current state
+3. Consider fresh start with handoff
+
+Want me to continue with the other files (new.md, update-cliignore.md, README.md)?

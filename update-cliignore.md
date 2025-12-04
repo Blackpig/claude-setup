@@ -34,6 +34,13 @@ claude-code "Update my existing .claude configuration to add context management 
 
 4. Update .claude/project-info.md to add CRITICAL CONTEXT SECTION if not already present:
    
+   First, verify the database type is correct:
+   - Read .env file and check DB_CONNECTION value
+   - If DB_CONNECTION=mysql → Database is MySQL
+   - If DB_CONNECTION=pgsql → Database is PostgreSQL  
+   - If DB_CONNECTION=sqlite → Database is SQLite
+   - If project-info.md has wrong database, correct it to match .env
+   
    Add at the VERY TOP (before all other content):
    
    ```markdown
@@ -46,7 +53,7 @@ claude-code "Update my existing .claude configuration to add context management 
    - **Livewire Version**: [existing version from file]
    - **PHP Version**: [existing version from file]
    - **Tailwind Version**: [existing version from file]
-   - **Database**: [existing from file]
+   - **Database**: [verify against .env DB_CONNECTION - must match actual database in use]
    
    ### Common Mistakes to AVOID:
    - Using Filament v4 syntax when project is v3 (e.g., Record $record vs $record)

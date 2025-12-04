@@ -327,6 +327,12 @@ After setup, you can customize:
 4. **Respect .cliignore:** Let Claude Code honor exclusions unless you explicitly need vendor code access
 5. **Use MCP servers:** Leverage Herd and Boost for common Laravel tasks
 
+### Filament-Specific Rules (TALL Stack Projects)
+1. **Migration Safety:** NEVER use `migrate:fresh` without asking - it deletes admin users
+2. **Livewire Components:** Prefer class-based over Volt - ask before using Volt
+3. **Flux Components:** ONLY in Laravel admin/auth panel - never in public/frontend pages
+4. **Always clarify context:** When building components, specify "admin" vs "frontend"
+
 ## Warning Signs of Context Degradation
 
 Watch for these signs during sessions:
